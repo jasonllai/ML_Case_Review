@@ -16,6 +16,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 get_ipython().system('pip install scikeras')
 from sklearn.model_selection import GridSearchCV
 from scikeras.wrappers import KerasClassifier
+from sklearn.metrics import accuracy_score
 
 
 # In[2]:
@@ -160,7 +161,7 @@ def build_model(meta,optimizer="RMSprop", lr=1e-3,units=32,units2=0, act="sigmoi
 
 # In[9]:
 
-
+# Source: ChatGPT (GPT-5, OpenAI, Oct 2025) - code suggestion for adding early stopping to prevent overfitting
 es = EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True)
 clf = KerasClassifier(model=build_model, epochs= 40, batch_size=32, verbose=0)
 param_grid = {
@@ -199,7 +200,7 @@ print("Best CV accuracy:", grid.best_score_)
 # In[14]:
 
 
-from sklearn.metrics import accuracy_score
+
 best_model = grid.best_estimator_
 y_pred = best_model.predict(X_test)
 test_acc = accuracy_score(y_test, y_pred)
